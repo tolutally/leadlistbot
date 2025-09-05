@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +21,17 @@
         .hero { min-height: 100vh; display: flex; align-items: center; }
         .hidden { display: none; }
         .loading { opacity: 0.7; pointer-events: none; }
+        
+        /* Circular text animation */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .circular-text-animate {
+            animation: rotate 20s linear infinite;
+            transform-origin: center;
+        }
     </style>
     
     <!-- Tailwind CSS CDN -->
@@ -51,172 +64,144 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-    <!-- Navigation Header -->
-    <header class="bg-white shadow-sm border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <!-- Left: Logo -->
-                <div class="flex items-center">
-                    <div>
-                        <h2 class="text-xl font-black text-gray-900 leading-tight">
-                            LeadListBot
-                        </h2>
-                        <div class="w-16 h-0.5 bg-gray-900 mt-1"></div>
+    <div class="relative">
+      <header class="absolute inset-x-0 top-0 z-10 w-full">
+        <div class="px-4 mx-auto sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16 lg:h-20">
+            <div class="flex-shrink-0">
+              <a href="#" title="LeadListBot" class="flex">
+                <div>
+                    <h2 class="text-xl font-black text-black leading-tight">
+                        LeadListBot
+                    </h2>
+                    <div class="w-16 h-0.5 bg-black mt-1"></div>
+                </div>
+              </a>
+            </div>
+
+            <button type="button" id="mobile-menu-button" class="inline-flex p-2 text-black transition-all duration-200 rounded-md lg:hidden focus:bg-gray-100 hover:bg-gray-100" aria-label="Open menu">
+              <svg class="block w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            </button>
+
+            <div class="hidden ml-auto lg:flex lg:items-center lg:justify-center lg:space-x-10">
+              <a href="#how-it-works" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> How it works </a>
+              <a href="#features" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Features </a>
+              <a href="#testimonials" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Testimonials </a>
+              <a href="#sample" onclick="trackEvent('header_cta_click'); openCalendly()" class="inline-flex items-center justify-center px-5 py-2.5 text-base font-semibold transition-all duration-200 rounded-full bg-black text-white hover:bg-orange-600 focus:bg-orange-600" role="button">
+                Get 50-Lead Sample
+              </a>
+            </div>
+          </div>
+          
+          <!-- Mobile Navigation Menu -->
+          <div id="mobile-menu" class="lg:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 border-t border-gray-100 bg-white">
+              <a href="#how-it-works" class="block text-gray-600 hover:text-gray-900 px-3 py-2 text-base font-medium">
+                How it works
+              </a>
+              <a href="#features" class="block text-gray-600 hover:text-gray-900 px-3 py-2 text-base font-medium">
+                Features
+              </a>
+              <a href="#pricing" class="block text-gray-600 hover:text-gray-900 px-3 py-2 text-base font-medium">
+                Pricing
+              </a>
+              <a href="#testimonials" class="block text-gray-600 hover:text-gray-900 px-3 py-2 text-base font-medium">
+                Testimonials
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="bg-yellow-50 overflow-hidden">
+        <div class="flex flex-col lg:flex-row lg:items-stretch lg:min-h-[400px]">
+          <!-- LEFT (text/form) -->
+          <div class="relative flex items-center justify-center w-full lg:order-2 lg:w-7/12">
+            <div class="absolute bottom-0 right-0 hidden lg:block">
+              <img class="object-contain w-auto h-48" src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/3/curved-lines.png" alt="" />
+            </div>
+
+            <div class="relative px-4 pt-32 pb-16 text-center sm:px-6 md:px-24 2xl:px-32 lg:py-32 lg:text-left">
+              <h1 class="text-4xl font-bold text-black sm:text-6xl xl:text-8xl">
+                Verified B2B Lead Lists
+                in 3–5 Days
+              </h1>
+
+              <p class="mt-8 text-md text-black">
+                ICP-matched contacts, double-verified with a less than 2% hard-bounce SLA .
+                Import-ready CSV for HubSpot, Apollo, Instantly.
+              </p>
+
+              <form action="#" method="POST" id="hero-form" class="max-w-xl mx-auto mt-8 bg-white lg:mx-0 sm:bg-transparent lg:mt-12 rounded-xl">
+                <div class="p-4 sm:p-2 sm:bg-white sm:border-2 sm:border-transparent sm:rounded-full sm:focus-within:border-orange-500 sm:focus-within:ring-1 sm:focus-within:ring-orange-500">
+                  <div class="flex flex-col items-start sm:flex-row">
+                    <div class="flex-1 w-full min-w-0">
+                      <div class="relative text-gray-400 focus-within:text-gray-600">
+                        <label for="leadlistbot_email" class="sr-only">Work email</label>
+                        <input
+                          type="email"
+                          name="email"
+                          id="leadlistbot_email"
+                          placeholder="Work email to analyse your ICP together"
+                          class="block w-full px-4 py-4 text-base text-center text-black placeholder-gray-500 transition-all duration-200 border-transparent rounded-full sm:text-left focus:border-transparent focus:ring-0 caret-orange-500"
+                          required
+                        />
+                      </div>
                     </div>
-                </div>
-                
-                <!-- Center: Navigation Links -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#features" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">
-                        Features
-                    </a>
-                    <a href="#how-it-works" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">
-                        How It Works
-                    </a>
-                    <a href="#testimonials" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">
-                        Testimonials
-                    </a>
-                    <a href="#pricing" class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">
-                        Pricing
-                    </a>
-                </nav>
-                
-                <!-- Right: CTA Button -->
-                <div class="flex items-center space-x-4">
-                    <button onclick="trackEvent('header_cta_click'); openCalendly()" 
-                            class="bg-black text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-lavender transition-colors">
-                        Get Free Sample
+
+                    <button type="submit" onclick="trackEvent('hero_form_submit')" class="inline-flex items-center justify-center w-full px-4 py-4 mt-4 font-semibold text-white transition-all duration-200 bg-orange-500 border border-transparent rounded-full sm:w-auto sm:ml-4 sm:mt-0 hover:bg-orange-600 focus:bg-orange-600">
+                        Book Free Consultation
                     </button>
-                    
-                    <!-- Mobile menu button -->
-                    <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-gray-900">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
+                  </div>
                 </div>
-            </div>
-            
-            <!-- Mobile Navigation Menu -->
-            <div id="mobile-menu" class="md:hidden hidden">
-                <div class="px-2 pt-2 pb-3 space-y-1 border-t border-gray-100">
-                    <a href="#features" class="block text-gray-600 hover:text-gray-900 px-3 py-2 text-base font-medium">
-                        Features
-                    </a>
-                    <a href="#how-it-works" class="block text-gray-600 hover:text-gray-900 px-3 py-2 text-base font-medium">
-                        How It Works
-                    </a>
-                    <a href="#testimonials" class="block text-gray-600 hover:text-gray-900 px-3 py-2 text-base font-medium">
-                        Testimonials
-                    </a>
-                    <a href="#pricing" class="block text-gray-600 hover:text-gray-900 px-3 py-2 text-base font-medium">
-                        Pricing
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+              </form>
 
-    <!-- HERO: simple two-column with card list (light palette) -->
-    <section class="relative bg-slate-50">
-      <!-- subtle split background -->
-      <div class="absolute inset-0">
-        <div class="absolute inset-y-0 left-0 w-[55%] bg-white"></div>
-      </div>
-
-      <div class="relative mx-auto max-w-7xl lg:grid lg:grid-cols-[55%_45%]">
-        <!-- LEFT: copy + CTAs -->
-        <div class="flex items-end px-4 pb-16 bg-white pt-28 sm:px-6 lg:px-8 lg:pb-24 xl:pr-12">
-          <div class="max-w-lg mx-auto lg:mx-0">
-            <!-- Top branding -->
-            
-            <p class="text-xs font-semibold tracking-widest uppercase">
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-                Double-Verified • &lt;2% Bounce • 3–5 Day Delivery
-              </span>
-            </p>
-
-            <h1 class="mt-6 text-4xl font-extrabold text-slate-900 sm:text-5xl lg:text-6xl">
-              Verified B2B Lead Lists in 3–5 Days
-            </h1>
-
-            <p class="mt-5 text-base leading-7 text-slate-600">
-              ICP-matched contacts, <span class="font-semibold">double-verified</span> and delivered as an
-              import-ready CSV for HubSpot, Apollo, or Instantly. <span class="font-semibold"> less than 2% hard-bounce SLA</span>
-              with 1:1 replacements.
-            </p>
-
-            <div class="flex flex-col items-start gap-3 mt-8 sm:flex-row">
-              <a href="#sample" onclick="trackEvent('cta_hero_sample'); openCalendly()" class="inline-flex items-center justify-center px-6 py-3 text-white bg-black rounded-lg shadow-sm hover:bg-blue-700">
-                Get My Free 50-Lead Sample
-              </a>
-              <a href="#book" onclick="trackEvent('cta_hero_book'); openCalendly()" class="inline-flex items-center justify-center px-6 py-3 text-slate-900 bg-white border border-slate-300 rounded-lg hover:border-slate-400">
-                Book a 15-min ICP Call
-              </a>
+              <p class="mt-5 text-sm text-black">
+                No spam - one follow-up about your request. CASL/CAN-SPAM friendly.
+              </p>
             </div>
 
-            <p class="mt-4 text-sm text-slate-500">
-              CASL/CAN-SPAM friendly handoff • Optional direct dials • Segments for A/B tests
-            </p>
+            <div class="absolute right-0 z-10 -bottom-16 lg:top-24 lg:-left-20">
+              <svg class="w-32 h-32 md:w-40 md:h-40 circular-text-animate" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <path id="circle" d="M 80, 80 m -60, 0 a 60,60 0 1,1 120,0 a 60,60 0 1,1 -120,0"/>
+                </defs>
+                <text class="text-sm font-semibold fill-black">
+                  <textPath href="#circle">
+                    MAKE OUTREACH EASY • MAKE OUTREACH EASY • 
+                  </textPath>
+                </text>
+              </svg>
+            </div>
           </div>
-        </div>
 
-        <!-- RIGHT: simple card list -->
-        <div class="relative flex items-end px-4 py-16 bg-slate-100 sm:px-6 lg:pb-24 lg:px-8 xl:pl-12">
-          <div class="relative w-full max-w-lg mx-auto lg:max-w-none">
-            <p class="text-sm font-semibold text-slate-700">Recent Deliveries</p>
-
-            <div class="mt-6 space-y-4">
-              <!-- Card 1 -->
-              <a class="flex items-center p-4 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition">
-                <div class="shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500"></div>
-                <div class="ml-4">
-                  <p class="text-xs font-medium text-slate-500">MSPs &amp; IT</p>
-                  <p class="mt-1 text-base font-semibold text-slate-900">Toronto — 2,000 contacts delivered</p>
-                  <p class="mt-1 text-xs text-slate-500">Sep 3, 2025 • Bounce 1.2% • Director, Owner, Sysadmin</p>
-                </div>
-              </a>
-
-              <!-- Card 2 -->
-              <a class="flex items-center p-4 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition">
-                <div class="shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-500"></div>
-                <div class="ml-4">
-                  <p class="text-xs font-medium text-slate-500">Property / Facilities</p>
-                  <p class="mt-1 text-base font-semibold text-slate-900">Chicago — 1,500 contacts delivered</p>
-                  <p class="mt-1 text-xs text-slate-500">Sep 2, 2025 • Dials 38% • Metro sliced</p>
-                </div>
-              </a>
-
-              <!-- Card 3 -->
-              <a class="flex items-center p-4 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition">
-                <div class="shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-rose-400 to-orange-500"></div>
-                <div class="ml-4">
-                  <p class="text-xs font-medium text-slate-500">SaaS / Agencies</p>
-                  <p class="mt-1 text-base font-semibold text-slate-900">Boston — 2,000 contacts delivered</p>
-                  <p class="mt-1 text-xs text-slate-500">Sep 1, 2025 • Bounce 1.6% • Signals included</p>
-                </div>
-              </a>
+          <!-- RIGHT (image/stat) -->
+          <div class="relative w-full overflow-hidden lg:order-1 h-96 lg:h-auto lg:w-5/12">
+            <div class="absolute inset-0">
+              <img class="object-cover w-full h-full scale-150" src="man-working-on-laptop.jpg" alt="Sales team making outreach easy with verified contact lists" />
             </div>
 
-            <!-- Tiny KPI row -->
-            <div class="grid grid-cols-3 gap-3 mt-6">
-              <div class="p-3 text-center bg-white border border-slate-200 rounded-xl">
-                <p class="text-[11px] text-slate-500">Qualified Rate</p>
-                <p class="mt-1 text-2xl font-bold text-slate-900">92.1%</p>
-              </div>
-              <div class="p-3 text-center bg-white border border-slate-200 rounded-xl">
-                <p class="text-[11px] text-slate-500">Leads (7d)</p>
-                <p class="mt-1 text-2xl font-bold text-slate-900">2,148</p>
-              </div>
-              <div class="p-3 text-center bg-white border border-slate-200 rounded-xl">
-                <p class="text-[11px] text-slate-500">Bounce (30d)</p>
-                <p class="mt-1 text-2xl font-bold text-slate-900">1.3%</p>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+
+            <div class="absolute bottom-0 left-0">
+              <div class="p-4 sm:p-6 lg:p-8">
+                <div class="flex items-center">
+                  <svg class="w-10 h-10 text-orange-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+                  </svg>
+                  <h2 class="font-bold text-white text-7xl ml-2.5">2,000+</h2>
+                </div>
+                <p class="max-w-xs mt-1.5 text-xl text-white">
+                  Contacts delivered in the last 7 days — <span class="font-semibold">making outreach easy</span>
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <!-- Features Section -->
     <section id="features" class="py-12 bg-white">
@@ -230,7 +215,7 @@
             
             <div class="grid md:grid-cols-3 gap-4 mb-8">
                 <!-- Verified Lead Data Card -->
-                <div class="bg-yellow-300 rounded-2xl p-6 relative overflow-hidden">
+                <div class="bg-orange-500 rounded-2xl p-6 relative overflow-hidden">
                     <div class="flex items-start justify-between mb-6">
                         <div>
                             <h3 class="text-xl font-bold text-gray-900 mb-2">Double-Verified Lead Data</h3>
@@ -259,7 +244,7 @@
                         </div>
                     </div>
                     <p class="text-gray-800 font-medium">
-                        PGet 2,000 ICP-matched contacts in 3–5 business days. Free 50-lead sample in 24h. Import-ready CSV for HubSpot, Apollo, Instantly.
+                        Get 2,000 ICP-matched contacts in 3–5 business days. Free 50-lead sample in 24h. Import-ready CSV for HubSpot, Apollo, Instantly.
                     </p>
                 </div>
 
@@ -297,6 +282,82 @@
         </div>
     </section>
 
+    <!-- How It Works Section -->
+    <section class="py-10 bg-white sm:py-16 lg:py-24">
+      <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto text-center">
+          <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">
+            How LeadListBot Works
+          </h2>
+          <p class="max-w-lg mx-auto mt-4 text-base leading-relaxed text-gray-600">
+            Define your ICP, we build and double-verify, you upload and send — all within 3–5 days with a less than 2% hard-bounce SLA.
+          </p>
+        </div>
+
+        <div class="relative mt-12 lg:mt-20">
+          <div class="absolute inset-x-0 hidden xl:px-44 top-2 md:block md:px-20 lg:px-28">
+            <img class="w-full" src="https://cdn.rareblocks.xyz/collection/celebration/images/steps/2/curved-dotted-line.svg" alt="" />
+          </div>
+
+          <div class="relative grid grid-cols-1 text-center gap-y-12 md:grid-cols-3 gap-x-12">
+            <!-- Step 1 -->
+            <div>
+              <div class="flex items-center justify-center w-16 h-16 mx-auto bg-white border-2 border-gray-200 rounded-full shadow">
+                <span class="text-xl font-semibold text-gray-700">1</span>
+              </div>
+              <h3 class="mt-6 text-xl font-semibold leading-tight text-black md:mt-10">
+                Define Your ICP
+              </h3>
+              <p class="mt-4 text-base text-gray-600">
+                Tell us the titles, regions, company size, industries and any tech/portfolio filters
+                (e.g., Microsoft 365/Azure, EDR, property type). Book a 15-min call or request a
+                free 50-lead sample.
+              </p>
+            </div>
+
+            <!-- Step 2 -->
+            <div>
+              <div class="flex items-center justify-center w-16 h-16 mx-auto bg-white border-2 border-gray-200 rounded-full shadow">
+                <span class="text-xl font-semibold text-gray-700">2</span>
+              </div>
+              <h3 class="mt-6 text-xl font-semibold leading-tight text-black md:mt-10">
+                We Source & Double-Verify
+              </h3>
+              <p class="mt-4 text-base text-gray-600">
+                We build your list, validate deliverability, remove risky addresses, and append
+                LinkedIn with plus optional direct dials. Only deliverable emails make the file.
+              </p>
+            </div>
+
+            <!-- Step 3 -->
+            <div>
+              <div class="flex items-center justify-center w-16 h-16 mx-auto bg-white border-2 border-gray-200 rounded-full shadow">
+                <span class="text-xl font-semibold text-gray-700">3</span>
+              </div>
+              <h3 class="mt-6 text-xl font-semibold leading-tight text-black md:mt-10">
+                Receive CSV, Upload & Send
+              </h3>
+              <p class="mt-4 text-base text-gray-600">
+                Get an <strong>import-ready CSV</strong> for HubSpot/Apollo/Instantly with clear segment labels and a
+               CASL/CAN-SPAM checklist. Typical packs of 2,000 contacts deliver in
+                <strong>3–5 business days</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- CTA Button -->
+        <div class="text-center mt-12 lg:mt-16">
+          <button onclick="openCalendly()" class="inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-black rounded-full hover:bg-gray-800 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            Book my ICP call now
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- Image Section -->
     <section class="py-12 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -311,98 +372,142 @@
 
 
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="py-12 bg-gray-50">
+    <!-- Services Section -->
+    <section id="services" class="py-12 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Top Section - Title and Description -->
-            <div class="grid md:grid-cols-2 gap-10 mb-12">
-                <!-- Left Side - Title -->
-                <div>
-                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
-                        Contact Data You Can Count On
-                    </h2>
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
+                    Contact Data You Can Count On
+                </h2>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto">
+                    Choose the right solution for your outreach needs. All the essentials that will move your pipeline fast — built to your ICP, verified, and ready to upload.
+                </p>
+            </div>
+            
+            <!-- Six Service Cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1: Apollo Export -->
+                <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Apollo Export</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        ICP-matched contact list, packaged as a clean CSV.
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        Delivered in 24–72h. Includes name, title, company, domain, LinkedIn, email*.
+                    </p>
                 </div>
-                
-                <!-- Right Side - Description -->
-                <div>
-                    <p class="text-lg text-gray-700">
-                        With LeadListBot you get the essentials that move pipeline fast—built to your ICP, verified, and ready to upload.
+
+                <!-- Card 2: Apollo + Verification -->
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Apollo Export + Verification</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Deliverable-only Apollo contacts, ready to send.
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        &lt;2% hard-bounce SLA. CSV built for HubSpot, Apollo, Instantly.
+                    </p>
+                </div>
+
+                <!-- Card 3: Sales Navigator Export -->
+                <div class="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Sales Navigator Export</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Precise LinkedIn prospect data, with optional verified emails.
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        Captured on our licensed seats. Delivery 24–72h. Import-ready CSV.
+                    </p>
+                </div>
+
+
+                <!-- Card 4: Crunchbase Company Export -->
+                <div class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Crunchbase Company Export</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        ABM-ready account list with firmographics and funding.
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        Industry, HQ, employees, rounds, investors. CSV on demand.
+                    </p>
+                </div>
+
+                <!-- Card 5: Crunchbase Contact Export -->
+                <div class="bg-gradient-to-br from-red-50 to-rose-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Crunchbase Contact Export</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Decision-makers tied to your target accounts.
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        Titles, LinkedIn, optional verified emails. Outreach-ready CSV.
+                    </p>
+                </div>
+
+                <!-- Card 6: Waterfall Enrichment -->
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-gray-900">Waterfall Enrichment </h3>
+                            <p class="text-sm text-blue-600 font-medium mt-1">🔥 Most Popular</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Cleaned, verified, deduped contact data that lands.
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        Multi-vendor email checks. &lt;2% hard-bounce SLA on verified sets.
                     </p>
                 </div>
             </div>
             
-            <!-- Bottom Section - Three Cards -->
-            <div class="grid md:grid-cols-3 gap-4">
-                <!-- Card 1: Quality Leads -->
-                <div class="bg-orange-400 rounded-2xl p-8 text-center">
-                    <div class="flex items-start justify-between mb-6">
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-900 text-left">Quality Leads</h3>
-                            <div class="text-2xl font-bold text-gray-900 text-left">01</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Large centered icon -->
-                    <div class="flex justify-center mb-8">
-                        <svg class="w-20 h-20 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2L3.09 8.26l1.98 1.21L12 4.72l6.93 4.75 1.98-1.21L12 2zm0 8.5l-7 4.81v1.44L12 21l7-4.25v-1.44l-7-4.81z"/>
-                            <path d="M12 9L5.18 13.63 12 18.26l6.82-4.63L12 9zm0-2.5l6.82 4.63L12 15.76 5.18 11.13 12 6.5z"/>
-                        </svg>
-                    </div>
-                    
-                    <p class="text-gray-900 font-medium">
-                        Only deliverable work emails make the file, this means<2% hard-bounce SLA with 1:1 replacements. Optional direct dials and LinkedIn on every contact.
-                    </p>
-                </div>
-
-                <!-- Card 2: Targeted Outreach -->
-                <div class="bg-orange-400 rounded-2xl p-8 text-center">
-                    <div class="flex items-start justify-between mb-6">
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-900 text-left">ICP-Tight Targeting</h3>
-                            <div class="text-2xl font-bold text-gray-900 text-left">02</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Large centered icon -->
-                    <div class="flex justify-center mb-8">
-                        <svg class="w-20 h-20 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M9 12l2 2 4-4" stroke="orange" stroke-width="2" fill="none"/>
-                            <path d="M12 6v6l4 2" stroke="orange" stroke-width="2" fill="none"/>
-                        </svg>
-                    </div>
-                    
-                    <p class="text-gray-900 font-medium">
-                        Precise filters by titles/seniority, industry, headcount, region, plus tech/portfolio flags (e.g., Microsoft 365/Azure, EDR, property type). City-specific segments for A/B tests.
-                    </p>
-                </div>
-
-                <!-- Card 3: Pipeline Support -->
-                <div class="bg-orange-400 rounded-2xl p-8 text-center">
-                    <div class="flex items-start justify-between mb-6">
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-900 text-left">Ready-to-Send Delivery & Support</h3>
-                            <div class="text-2xl font-bold text-gray-900 text-left">03</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Large centered icon -->
-                    <div class="flex justify-center mb-8">
-                        <svg class="w-20 h-20 text-gray-900" fill="currentColor" viewBox="0 0 24 24">
-                            <rect x="3" y="3" width="18" height="12" rx="2"/>
-                            <path d="M8 21h8"/>
-                            <path d="M12 17v4"/>
-                            <path d="M7 8h3v2H7z" fill="orange"/>
-                            <path d="M14 8h3v2h-3z" fill="orange"/>
-                            <path d="M7 11h10v1H7z" fill="orange"/>
-                        </svg>
-                    </div>
-                    
-                    <p class="text-gray-900 font-medium">
-                        3–5 day turnaround. CSV formatted for HubSpot / Apollo / Instantly, import guide included. Compliance handoff (CASL/CAN-SPAM) and fast replacements—plus optional monthly refresh.
-                    </p>
-                </div>
+            <!-- CTA Button -->
+            <div class="text-center mt-12 lg:mt-16">
+                <button onclick="openCalendly()" class="inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-orange-500 rounded-full hover:bg-orange-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    Get my free sample
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </section>
@@ -654,6 +759,63 @@
                 behavior: 'smooth'
             });
         }
+
+        // Hero form submission
+        document.getElementById('hero-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const button = form.querySelector('button[type="submit"]');
+            const originalText = button.textContent;
+            
+            // Show loading state
+            button.textContent = 'Sending...';
+            button.disabled = true;
+            
+            try {
+                // Simulate form submission (replace with actual endpoint)
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Success
+                button.textContent = 'Thank You!';
+                button.classList.remove('bg-orange-500', 'hover:bg-orange-600');
+                button.classList.add('bg-green-600', 'hover:bg-green-700');
+                
+                form.reset();
+                
+                trackEvent('hero_form_submission_success', {
+                    email: formData.get('email')
+                });
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('bg-green-600', 'hover:bg-green-700');
+                    button.classList.add('bg-orange-500', 'hover:bg-orange-600');
+                    button.disabled = false;
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Hero form submission error:', error);
+                
+                button.textContent = 'Error - Try Again';
+                button.classList.remove('bg-orange-500', 'hover:bg-orange-600');
+                button.classList.add('bg-red-600', 'hover:bg-red-700');
+                
+                trackEvent('hero_form_submission_error', {
+                    error: error.message
+                });
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('bg-red-600', 'hover:bg-red-700');
+                    button.classList.add('bg-orange-500', 'hover:bg-orange-600');
+                    button.disabled = false;
+                }, 3000);
+            }
+        });
 
         // Footer form submission
         document.getElementById('footer-form').addEventListener('submit', async function(e) {
