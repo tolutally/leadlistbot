@@ -177,7 +177,7 @@
                 
                 <!-- Button below input box -->
                 <div class="mt-4">
-                  <button type="submit" onclick="trackEvent('hero_form_submit')" class="inline-flex items-center justify-center w-full px-6 py-4 font-semibold text-white transition-all duration-200 bg-orange-500 border border-transparent rounded-full hover:bg-orange-600 focus:bg-orange-600">
+                  <button type="submit" onclick="trackEvent('hero_form_submit'); trackFormSubmission('consultation_request', 'hero_section');" class="inline-flex items-center justify-center w-full px-6 py-4 font-semibold text-white transition-all duration-200 bg-orange-500 border border-transparent rounded-full hover:bg-orange-600 focus:bg-orange-600">
                       Book Free Consultation
                   </button>
                 </div>
@@ -676,7 +676,7 @@
                         <input type="hidden" name="_next" value="thank-you.html">
                         
                         <!-- Submit button -->
-                        <button type="submit" onclick="trackEvent('footer_form_submit')"
+                        <button type="submit" onclick="trackEvent('footer_form_submit'); trackFormSubmission('mailing_list', 'footer_section');"
                                 class="w-full bg-gray-900 text-white py-4 px-6 rounded-2xl text-lg font-semibold hover:bg-gray-800 transition-colors">
                             Join our mailing list
                         </button>
@@ -728,6 +728,23 @@
             }
             
             console.log('Event tracked:', eventName, eventParams);
+        }
+
+        // Track form submissions for conversion optimization
+        function trackFormSubmission(formType, formLocation) {
+            // Track the form submission event
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'form_submit', {
+                    event_category: 'engagement',
+                    event_label: formType,
+                    form_location: formLocation
+                });
+            }
+            
+            trackEvent('form_submission', {
+                form_type: formType,
+                form_location: formLocation
+            });
         }
 
 

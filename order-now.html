@@ -232,7 +232,7 @@
               <!-- Submit Button -->
               <button 
                 type="submit" 
-                onclick="trackEvent('order_form_submit')"
+                onclick="trackEvent('order_form_submit'); trackFormSubmission('lead_list_order', 'order_now_page');"
                 class="w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white py-5 px-8 rounded-2xl text-xl font-bold hover:from-orange-700 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Submit Order Request
@@ -320,6 +320,23 @@
             }
             
             console.log('Order page event tracked:', eventName, eventParams);
+        }
+
+        // Track form submissions for conversion optimization
+        function trackFormSubmission(formType, formLocation) {
+            // Track the form submission event
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'form_submit', {
+                    event_category: 'engagement',
+                    event_label: formType,
+                    form_location: formLocation
+                });
+            }
+            
+            trackEvent('form_submission', {
+                form_type: formType,
+                form_location: formLocation
+            });
         }
 
         // Mobile menu toggle
