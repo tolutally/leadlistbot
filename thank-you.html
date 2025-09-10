@@ -13,13 +13,27 @@
       gtag('js', new Date());
 
       gtag('config', 'AW-17537512610');
+      
+      // Debug logging
+      console.log('Google tag configured for AW-17537512610');
     </script>
     
     <!-- Event snippet for Purchase conversion page -->
     <script>
-      gtag('event', 'conversion', {
-        'send_to': 'AW-17537512610/8RagCLuHrJcbEKLpxKpB',
-        'transaction_id': new Date().getTime() + '_' + Math.random().toString(36).substr(2, 9)
+      // Wait for gtag to be ready before firing conversion
+      window.addEventListener('load', function() {
+        // Small delay to ensure gtag is fully loaded
+        setTimeout(function() {
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'conversion', {
+              'send_to': 'AW-17537512610/8RagCLuHrJcbEKLpxKpB',
+              'transaction_id': new Date().getTime() + '_' + Math.random().toString(36).substr(2, 9)
+            });
+            console.log('Conversion event fired');
+          } else {
+            console.error('gtag is not available');
+          }
+        }, 500);
       });
     </script>
     
@@ -62,5 +76,31 @@
             </p>
         </div>
     </div>
+    
+    <!-- Debug Script -->
+    <script>
+      // Additional debugging for conversion tracking
+      window.addEventListener('load', function() {
+        console.log('Page loaded');
+        console.log('dataLayer:', window.dataLayer);
+        console.log('gtag available:', typeof gtag !== 'undefined');
+        
+        // Check if Google Analytics script loaded
+        setTimeout(function() {
+          console.log('Checking Google tag after delay...');
+          if (window.gtag) {
+            console.log('✓ gtag function is available');
+          } else {
+            console.error('✗ gtag function is not available');
+          }
+          
+          if (window.dataLayer && window.dataLayer.length > 0) {
+            console.log('✓ dataLayer has content:', window.dataLayer);
+          } else {
+            console.error('✗ dataLayer is empty or not available');
+          }
+        }, 1000);
+      });
+    </script>
 </body>
 </html>
